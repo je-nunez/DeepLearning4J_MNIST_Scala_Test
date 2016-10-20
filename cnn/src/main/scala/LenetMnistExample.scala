@@ -12,18 +12,13 @@ package mainapp
 import org.deeplearning4j.datasets.iterator.impl.MnistDataSetIterator
 import org.deeplearning4j.eval.Evaluation
 import org.deeplearning4j.nn.api.OptimizationAlgorithm
-import org.deeplearning4j.nn.conf.MultiLayerConfiguration
-import org.deeplearning4j.nn.conf.NeuralNetConfiguration
-import org.deeplearning4j.nn.conf.Updater
+import org.deeplearning4j.nn.conf.{MultiLayerConfiguration, NeuralNetConfiguration, Updater}
 import org.deeplearning4j.nn.conf.inputs.InputType
-import org.deeplearning4j.nn.conf.layers.ConvolutionLayer
-import org.deeplearning4j.nn.conf.layers.DenseLayer
-import org.deeplearning4j.nn.conf.layers.OutputLayer
-import org.deeplearning4j.nn.conf.layers.SubsamplingLayer
+import org.deeplearning4j.nn.conf.layers.{ConvolutionLayer, DenseLayer, OutputLayer, SubsamplingLayer}
 import org.deeplearning4j.nn.conf.layers.setup.ConvolutionLayerSetup
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
 import org.deeplearning4j.nn.weights.WeightInit
-import org.deeplearning4j.optimize.listeners.ScoreIterationListener
+import org.deeplearning4j.optimize.listeners.{ScoreIterationListener, PerformanceListener}
 import org.nd4j.linalg.api.ndarray.INDArray
 import org.nd4j.linalg.dataset.DataSet
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator
@@ -121,7 +116,27 @@ object LenetMnistExample {
 
 
     println("Training CNN model....")
-    nnModel.setListeners(new ScoreIterationListener(1))
+
+    // See interface:
+    //      https://deeplearning4j.org/doc/org/deeplearning4j/optimize/api/IterationListener.html
+    // for other possible iteration listeners below, e.g.,
+    // org.deeplearning4j.optimize.listeners.ComposableIterationListener
+    //
+    // The original Java code has this instruction:
+    //       nnModel.setListeners(new ScoreIterationListener(1))
+    //
+    // report timing performance every 10 iterations, reporting as well the nnModel.score() at the
+    // end of each group of 10-iterations:
+    nnModel.setListeners(new PerformanceListener.Builder()
+                               .reportIteration(true)
+                               .reportTime(true)
+                               .reportSample(true)
+                               .reportBatch(false)
+                               .reportScore(true)
+                               .setFrequency(10)
+                               .build()
+                        )
+
     for { epoch <- 0 until nEpochs } {
       nnModel.fit(mnistTrain)
       println(s"*** Completed epoch $epoch ***")
