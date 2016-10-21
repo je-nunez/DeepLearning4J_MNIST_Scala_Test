@@ -98,7 +98,7 @@ DeepLearning4J has a web UI integrated on top of an embedded Eclipse Jetty web s
 
 (DeepLearning4J can automatically open this URL for you, so you don't need to know the actual `<jetty-port>` it is using or open this link in your web browser).
 
-[visualization_of_the_progression_of_the_training_in_the_DeepLearning4J_Eclipse_Jetty_UI.png](extras/visualization_of_the_progression_of_the_training_in_the_DeepLearning4J_Eclipse_Jetty_UI.png)
+![extras/visualization_of_the_progression_of_the_training_in_the_DeepLearning4J_Eclipse_Jetty_UI.png](./extras/visualization_of_the_progression_of_the_training_in_the_DeepLearning4J_Eclipse_Jetty_UI.png?raw=true "visualization of the progression of the training in the DeepLearning4J Eclipse Jetty UI")
 
 In general, the visualization of the neural network training for DeepLearning4J is explained here: [https://deeplearning4j.org/visualization](https://deeplearning4j.org/visualization).
 
