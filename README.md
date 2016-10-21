@@ -90,3 +90,59 @@ Some results of the MNIST classifier using a Convolutional Neural Network in the
          Recall:    0.9836
          F1 Score:  0.9836
 
+# Visualization of the progress of the Training of the Neural Network by DeepLearning4J
+
+DeepLearning4J has a web UI integrated on top of an embedded Eclipse Jetty web server, which allows to visualize many things during the training. For example, the activations at:
+
+       http://localhost:<jetty-port>/activations
+
+(DeepLearning4J can automatically open this URL for you, so you don't need to know the actual `<jetty-port>` it is using or open this link in your web browser).
+
+[visualization_of_the_progression_of_the_training_in_the_DeepLearning4J_Eclipse_Jetty_UI.png](extras/visualization_of_the_progression_of_the_training_in_the_DeepLearning4J_Eclipse_Jetty_UI.png)
+
+In general, the visualization of the neural network training for DeepLearning4J is explained here: [https://deeplearning4j.org/visualization](https://deeplearning4j.org/visualization).
+
+Other paths that DeepLearning4J defines:
+
+        GET     /rl (org.deeplearning4j.ui.rl.RlDropwiz)
+        GET     /rl/state (org.deeplearning4j.ui.rl.RlDropwiz)
+        POST    /rl/state (org.deeplearning4j.ui.rl.RlDropwiz)
+        GET     /flow (org.deeplearning4j.ui.flow.FlowDropwiz)
+        GET     /flow/action/{id} (org.deeplearning4j.ui.flow.FlowDropwiz)
+        GET     /flow/info (org.deeplearning4j.ui.flow.FlowDropwiz)
+        GET     /flow/state (org.deeplearning4j.ui.flow.FlowDropwiz)
+        POST    /flow/action/{id} (org.deeplearning4j.ui.flow.FlowDropwiz)
+        POST    /flow/info (org.deeplearning4j.ui.flow.FlowDropwiz)
+        POST    /flow/state (org.deeplearning4j.ui.flow.FlowDropwiz)
+        GET     /word2vec (org.deeplearning4j.ui.nearestneighbors.word2vec.NearestNeighborsDropwiz)
+        GET     /word2vec/{path} (org.deeplearning4j.ui.nearestneighbors.word2vec.NearestNeighborsDropwiz)
+        POST    /word2vec/upload (org.deeplearning4j.ui.nearestneighbors.word2vec.NearestNeighborsDropwiz)
+        POST    /word2vec/vocab (org.deeplearning4j.ui.nearestneighbors.word2vec.NearestNeighborsDropwiz)
+        POST    /word2vec/words (org.deeplearning4j.ui.nearestneighbors.word2vec.NearestNeighborsDropwiz)
+        GET     /api/coords (org.deeplearning4j.ui.api.ApiResource)
+        GET     /api/{path} (org.deeplearning4j.ui.api.ApiResource)
+        POST    /api/coords (org.deeplearning4j.ui.api.ApiResource)
+        POST    /api/update (org.deeplearning4j.ui.api.ApiResource)
+        POST    /api/upload (org.deeplearning4j.ui.api.ApiResource)
+        GET     / (org.deeplearning4j.ui.defaults.DefaultDropwiz)
+        GET     /events (org.deeplearning4j.ui.defaults.DefaultDropwiz)
+        GET     /sessions (org.deeplearning4j.ui.defaults.DefaultDropwiz)
+        GET     /whatsup (org.deeplearning4j.ui.defaults.DefaultDropwiz)
+        GET     /activations (org.deeplearning4j.ui.activation.ActivationsDropwiz)
+        GET     /activations/img (org.deeplearning4j.ui.activation.ActivationsDropwiz)
+        POST    /activations/update (org.deeplearning4j.ui.activation.ActivationsDropwiz)
+        GET     /filters (org.deeplearning4j.ui.renders.RendersDropwiz)
+        GET     /filters/img (org.deeplearning4j.ui.renders.RendersDropwiz)
+        POST    /filters/update (org.deeplearning4j.ui.renders.RendersDropwiz)
+        GET     /weights (org.deeplearning4j.ui.weights.WeightDropwiz)
+        GET     /weights/data (org.deeplearning4j.ui.weights.WeightDropwiz)
+        GET     /weights/updated (org.deeplearning4j.ui.weights.WeightDropwiz)
+        POST    /weights/update (org.deeplearning4j.ui.weights.WeightDropwiz)
+        GET     /tsne (org.deeplearning4j.ui.tsne.TsneDropwiz)
+        GET     /tsne/{path} (org.deeplearning4j.ui.tsne.TsneDropwiz)
+        POST    /tsne/update (org.deeplearning4j.ui.tsne.TsneDropwiz)
+        POST    /tsne/upload (org.deeplearning4j.ui.tsne.TsneDropwiz)
+        POST    /tsne/vocab (org.deeplearning4j.ui.tsne.TsneDropwiz)
+
+The last subset of paths, the t-SNE (`/tsne/` in the DeepLearning4J UI) is exposed in https://lvdmaaten.github.io/tsne/ and in 'Visualizing Data using t-SNE', by Laurens van der Maaten and Geoffrey Hinton ( [http://jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf](http://jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf) ). Example: `org.deeplearning4j.plot.Tsne` and `org.deeplearning4j.plot.BarnesHutTsne`.
+
