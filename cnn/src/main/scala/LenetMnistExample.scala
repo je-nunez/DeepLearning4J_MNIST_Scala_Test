@@ -19,6 +19,8 @@ import org.deeplearning4j.nn.conf.layers.setup.ConvolutionLayerSetup
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
 import org.deeplearning4j.nn.weights.WeightInit
 import org.deeplearning4j.optimize.listeners.{ScoreIterationListener, PerformanceListener}
+import org.deeplearning4j.ui.UiServer
+import org.deeplearning4j.ui.weights.ConvolutionalIterationListener
 import org.nd4j.linalg.api.ndarray.INDArray
 import org.nd4j.linalg.dataset.DataSet
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator
@@ -28,6 +30,9 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION
 // import org.deeplearning4j.nn.conf.LearningRatePolicy
 
 object LenetMnistExample {
+
+  // True means we are in Development so we need to visualize the neural training, false Production
+  val flagVisualizeDevelopmentOrProduction: Boolean = true
 
   def main(args: Array[String]): Unit = {
     val nChannels = 1          // Number of input channels
@@ -124,18 +129,31 @@ object LenetMnistExample {
     //
     // The original Java code has this instruction:
     //       nnModel.setListeners(new ScoreIterationListener(1))
-    //
-    // report timing performance every 10 iterations, reporting as well the nnModel.score() at the
-    // end of each group of 10-iterations:
-    nnModel.setListeners(new PerformanceListener.Builder()
-                               .reportIteration(true)
-                               .reportTime(true)
-                               .reportSample(true)
-                               .reportBatch(false)
-                               .reportScore(true)
-                               .setFrequency(10)
-                               .build()
-                        )
+    // You may have multiple listeners active at the same time on a same neural network:
+    // https://deeplearning4j.org/doc/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.html#setListeners-java.util.Collection-
+    nnModel.setListeners(
+      if (flagVisualizeDevelopmentOrProduction) {
+        // this is a Development environment
+        val uiServer = UiServer.getInstance
+        println("Visualization of the training in Development at " +
+                s"http://localhost:${uiServer.getPort}/activations")
+
+        new ConvolutionalIterationListener(10, true)
+      } else {
+        // this is a Production environment, so the ConvolutionalIterationListener http plot slows
+        // down the training and should not be necessary:
+        // log the timing performance every 10 iterations, reporting as well the nnModel.score() at
+        // the end of each group of 10-iterations:
+        new PerformanceListener.Builder()
+                                 .reportIteration(true)
+                                 .reportTime(true)
+                                 .reportSample(true)
+                                 .reportBatch(false)
+                                 .reportScore(true)
+                                 .setFrequency(10)
+                                 .build()
+      }
+    )
 
     for { epoch <- 0 until nEpochs } {
       nnModel.fit(mnistTrain)
@@ -151,6 +169,12 @@ object LenetMnistExample {
       println(eval.stats())
       mnistTest.reset()
     }
+
     println("****************Example finished********************")
+    if (flagVisualizeDevelopmentOrProduction) {
+      val uiServer = UiServer.getInstance
+      println(s"Press Ctrl-C to stop server at http://localhost:${uiServer.getPort}/\n" +
+              s"(E.g., checking http://localhost:${uiServer.getPort}/activations )")
+    }
   }
 }
