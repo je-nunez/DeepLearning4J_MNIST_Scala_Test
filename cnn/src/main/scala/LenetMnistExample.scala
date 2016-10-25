@@ -8,6 +8,7 @@ package mainapp
 //   LenetMnistExample.java:   Created by agibsonccc on 9/16/15.
 //   LenetMnistExample.java:   Modified by dmichelin on 12/10/2016 to add documentation
 
+import scala.collection.JavaConverters._
 
 import org.deeplearning4j.datasets.iterator.impl.MnistDataSetIterator
 import org.deeplearning4j.eval.Evaluation
@@ -161,10 +162,11 @@ object LenetMnistExample {
 
       println(s"Evaluating CNN model on training set after epoch $epoch ....")
       val eval = new Evaluation(outputNum)
-      while (mnistTest.hasNext) {
-        val dataSet = mnistTest.next
-        val output = nnModel.output(dataSet.getFeatureMatrix, false)
-        eval.eval(dataSet.getLabels, output)
+      mnistTest.asScala foreach {
+        mnistCharDataSet => {
+          val output = nnModel.output(mnistCharDataSet.getFeatureMatrix, false)
+          eval.eval(mnistCharDataSet.getLabels, output)
+        }
       }
       println(eval.stats())
       mnistTest.reset()
