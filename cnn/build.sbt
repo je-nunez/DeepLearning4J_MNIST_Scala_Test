@@ -28,6 +28,7 @@ val versions = Map(
                     "dl4j" -> "0.6.0",
                     "guava" -> "19.0",
                     "datavec" -> "0.6.0",
+                    "twelvemonkeys" -> "3.2.1",
                     "jfreechart" -> "1.0.19",
                     "arbiter-deeplearning4j" -> "0.6.0"
                   )
@@ -43,6 +44,13 @@ libraryDependencies ++= Seq(
 
     "com.google.guava" % "guava" % versions("guava"),
     "org.datavec" % "datavec-data-codec" % versions("datavec"),
+
+    "com.twelvemonkeys.common" % "common-lang" % versions("twelvemonkeys"),
+    "com.twelvemonkeys.common" % "common-io" % versions("twelvemonkeys"),
+    "com.twelvemonkeys.common" % "common-image" % versions("twelvemonkeys"),
+    "com.twelvemonkeys.imageio" % "imageio-core" % versions("twelvemonkeys"),
+    "com.twelvemonkeys.imageio" % "imageio-metadata" % versions("twelvemonkeys"),
+
     "org.jfree" % "jfreechart" % versions("jfreechart"),
     "org.deeplearning4j" % "arbiter-deeplearning4j" % versions("arbiter-deeplearning4j")
 )
