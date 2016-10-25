@@ -143,6 +143,11 @@ Other paths that DeepLearning4J defines:
         POST    /tsne/update (org.deeplearning4j.ui.tsne.TsneDropwiz)
         POST    /tsne/upload (org.deeplearning4j.ui.tsne.TsneDropwiz)
         POST    /tsne/vocab (org.deeplearning4j.ui.tsne.TsneDropwiz)
+        POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
+        POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
 
-The last subset of paths, the t-SNE (`/tsne/` in the DeepLearning4J UI) is exposed in https://lvdmaaten.github.io/tsne/ and in 'Visualizing Data using t-SNE', by Laurens van der Maaten and Geoffrey Hinton ( [http://jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf](http://jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf) ). Example: `org.deeplearning4j.plot.Tsne` and `org.deeplearning4j.plot.BarnesHutTsne`.
+Near the last subset of paths, the t-SNE ones (`/tsne/` in the DeepLearning4J UI) is exposed in https://lvdmaaten.github.io/tsne/ and in 'Visualizing Data using t-SNE', by Laurens van der Maaten and Geoffrey Hinton ( [http://jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf](http://jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf) ). Example: `org.deeplearning4j.plot.Tsne` and `org.deeplearning4j.plot.BarnesHutTsne`.
 
+# Others
+
+The DeepLearning4J group is also developing a Scala wrapper for Deeplearning4J, [https://github.com/deeplearning4j/ScalNet](https://github.com/deeplearning4j/ScalNet), inspired by the Keras wrapper over TensorFlow and Theano: [https://github.com/fchollet/keras](https://github.com/fchollet/keras), documentation at: [https://keras.io](https://keras.io)
