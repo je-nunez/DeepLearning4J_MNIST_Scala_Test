@@ -43,6 +43,13 @@ object LenetMnistExample {
     val iterations = 1         // Number of training iterations
     val seed = 123
 
+    /* Avoid messages about caught exceptions and stack traces from the Reflections Java Runtime API, like:
+     * 
+     *    18:21:01.823 [main] WARN  org.reflections.Reflections - could not create Vfs.Dir from url. ignoring the exception and continuing
+     *    org.reflections.ReflectionsException: could not create Vfs.Dir from url, no matching UrlType was found [file:/System/Library/Java/Extensions/libJ3DAudio.jnilib]
+     */
+    ReflectionsHelper.registerUrlTypes()
+
     println("Loading MNIST data to training dataset and test dataset....")
     val mnistTrain = new MnistDataSetIterator(batchSize, true, 12345)
     val mnistTest = new MnistDataSetIterator(batchSize, false, 12345)

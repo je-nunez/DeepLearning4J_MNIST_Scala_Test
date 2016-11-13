@@ -31,10 +31,17 @@ object MLPMnistTwoLayerExample {
     val numEpochs = 15
     val rate = 0.0015                        // alpha
 
+    /* Avoid messages about caught exceptions and stack traces from the Reflections Java Runtime API, like:
+     * 
+     *    18:21:01.823 [main] WARN  org.reflections.Reflections - could not create Vfs.Dir from url. ignoring the exception and continuing
+     *    org.reflections.ReflectionsException: could not create Vfs.Dir from url, no matching UrlType was found [file:/System/Library/Java/Extensions/libJ3DAudio.jnilib]
+     */
+    ReflectionsHelper.registerUrlTypes()
+
+
     // Get the DataSetIterators for the training and the test datasets
     val mnistTrain = new MnistDataSetIterator(batchSize, true, rngSeed)
     val mnistTest = new MnistDataSetIterator(batchSize, false, rngSeed)
-
 
     println("Building neural-network model....")
     val nnConf =
