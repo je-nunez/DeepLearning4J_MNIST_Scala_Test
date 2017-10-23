@@ -10,13 +10,15 @@ import org.nd4j.linalg.dataset.api.iterator.DataSetIterator
 import org.deeplearning4j.datasets.iterator.impl.MnistDataSetIterator
 import org.deeplearning4j.eval.Evaluation
 import org.deeplearning4j.nn.api.OptimizationAlgorithm
-import org.deeplearning4j.nn.conf.{MultiLayerConfiguration, NeuralNetConfiguration, Updater}
+import org.deeplearning4j.nn.conf.{MultiLayerConfiguration, NeuralNetConfiguration}
 import org.deeplearning4j.nn.conf.layers.{DenseLayer, OutputLayer}
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
 import org.deeplearning4j.nn.weights.WeightInit
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener
 import org.nd4j.linalg.api.ndarray.INDArray
 import org.nd4j.linalg.dataset.DataSet
+import org.nd4j.linalg.activations.Activation
+import org.nd4j.linalg.learning.config.Nesterovs
 import org.nd4j.linalg.lossfunctions.LossFunctions.LossFunction
 
 
@@ -49,10 +51,11 @@ object MLPMnistTwoLayerExample {
         .seed(rngSeed)
         .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
         .iterations(1)
-        .activation("relu")
+        // .activation("relu")
+        .activation(Activation.RELU)
         .weightInit(WeightInit.XAVIER)
         .learningRate(rate)
-        .updater(Updater.NESTEROVS).momentum(0.98)
+        .updater(new Nesterovs(0.98))   // 0.98 is the momentum
         .regularization(true).l2(rate * 0.005)
         .list()
         .layer(0, new DenseLayer.Builder()                 // input neural layer
@@ -66,7 +69,8 @@ object MLPMnistTwoLayerExample {
                        .build()
               )
         .layer(2, new OutputLayer.Builder(LossFunction.NEGATIVELOGLIKELIHOOD)
-                       .activation("softmax")
+                       // .activation("softmax")
+                       .activation(Activation.SOFTMAX)
                        .nIn(100)
                        .nOut(outputNum)
                        .build()

@@ -3,7 +3,7 @@ name := "MNISTdl4jScala"
 
 version := "0.0.1"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.11.11"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature",
                       "-encoding", "utf8", "-Xfuture", "-Xlint")
@@ -24,12 +24,12 @@ testOptions in Test += Tests.Argument("-oD")
 concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
 
 val versions = Map(
-                    "nd4j" -> "0.6.0",
-                    "dl4j" -> "0.6.0",
-                    "guava" -> "19.0",
-                    "datavec" -> "0.6.0",
+                    "nd4j" -> "0.9.1",
+                    "dl4j" -> "0.9.1",
+                    "guava" -> "20.0",
+                    "datavec" -> "0.9.1",
                     "jfreechart" -> "1.0.19",
-                    "arbiter-deeplearning4j" -> "0.6.0"
+                    "arbiter-deeplearning4j" -> "0.9.1"
                   )
 
 libraryDependencies ++= Seq(
@@ -39,7 +39,8 @@ libraryDependencies ++= Seq(
 
     "org.deeplearning4j" % "deeplearning4j-core" % versions("dl4j"),
     "org.deeplearning4j" % "deeplearning4j-nlp" % versions("dl4j"),
-    "org.deeplearning4j" % "deeplearning4j-ui" % versions("dl4j"),
+    "org.deeplearning4j" % "deeplearning4j-ui_2.11" % versions("dl4j"),
+    "org.deeplearning4j" % "deeplearning4j-play_2.11" % versions("dl4j"),
 
     "com.google.guava" % "guava" % versions("guava"),
     "org.datavec" % "datavec-data-codec" % versions("datavec"),
