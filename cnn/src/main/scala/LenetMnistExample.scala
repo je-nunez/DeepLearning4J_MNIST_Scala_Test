@@ -16,15 +16,17 @@ import org.deeplearning4j.nn.api.OptimizationAlgorithm
 import org.deeplearning4j.nn.conf.{MultiLayerConfiguration, NeuralNetConfiguration, Updater}
 import org.deeplearning4j.nn.conf.inputs.InputType
 import org.deeplearning4j.nn.conf.layers.{ConvolutionLayer, DenseLayer, OutputLayer, SubsamplingLayer}
-import org.deeplearning4j.nn.conf.layers.setup.ConvolutionLayerSetup
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
 import org.deeplearning4j.nn.weights.WeightInit
 import org.deeplearning4j.optimize.listeners.{ScoreIterationListener, PerformanceListener}
-import org.deeplearning4j.ui.UiServer
+// import org.deeplearning4j.ui.UiServer
+import org.deeplearning4j.ui.api.UIServer
 import org.deeplearning4j.ui.weights.ConvolutionalIterationListener
 import org.nd4j.linalg.api.ndarray.INDArray
 import org.nd4j.linalg.dataset.DataSet
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator
+import org.nd4j.linalg.activations.Activation
+import org.nd4j.linalg.learning.config.Nesterovs
 import org.nd4j.linalg.lossfunctions.LossFunctions
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION
 
@@ -33,7 +35,7 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION
 object LenetMnistExample {
 
   // True means we are in Development so we need to visualize the neural training, false Production
-  val flagVisualizeDevelopmentOrProduction: Boolean = true
+  val flagVisualizeDevelopmentOrProduction: Boolean = false
 
   def main(args: Array[String]): Unit = {
     val nChannels = 1          // Number of input channels
@@ -44,7 +46,7 @@ object LenetMnistExample {
     val seed = 123
 
     /* Avoid messages about caught exceptions and stack traces from the Reflections Java Runtime API, like:
-     * 
+     *
      *    18:21:01.823 [main] WARN  org.reflections.Reflections - could not create Vfs.Dir from url. ignoring the exception and continuing
      *    org.reflections.ReflectionsException: could not create Vfs.Dir from url, no matching UrlType was found [file:/System/Library/Java/Extensions/libJ3DAudio.jnilib]
      */
@@ -67,14 +69,15 @@ object LenetMnistExample {
         // .learningRateDecayPolicy(LearningRatePolicy.Inverse).lrPolicyDecayRate(0.001).lrPolicyPower(0.75)
         .weightInit(WeightInit.XAVIER)
         .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
-        .updater(Updater.NESTEROVS).momentum(0.9)
+        .updater(new Nesterovs(0.9))   // 0.9 is the momentum
         .list()
         .layer(0, new ConvolutionLayer.Builder(5, 5)
                     // nIn and nOut specify depth. nIn here is the nChannels and nOut is the number of filters to be applied
                     .nIn(nChannels)
                     .stride(1, 1)
                     .nOut(20)
-                    .activation("identity")
+                    // .activation("identity")
+                    .activation(Activation.IDENTITY)
                     .build()
               )
         .layer(1, new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.MAX)
@@ -86,7 +89,8 @@ object LenetMnistExample {
                     // Note that nIn need not be specified in later layers
                     .stride(1, 1)
                     .nOut(50)
-                    .activation("identity")
+                    // .activation("identity")
+                    .activation(Activation.IDENTITY)
                     .build()
               )
         .layer(3, new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.MAX)
@@ -95,13 +99,15 @@ object LenetMnistExample {
                     .build()
               )
         .layer(4, new DenseLayer.Builder()
-                    .activation("relu")
+                    // .activation("relu")
+                    .activation(Activation.RELU)
                     .nOut(500)
                     .build()
               )
         .layer(5, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
                     .nOut(outputNum)
-                    .activation("softmax")
+                    // .activation("softmax")
+                    .activation(Activation.SOFTMAX)
                     .build()
               )
         .setInputType(InputType.convolutionalFlat(28, 28, 1))    // See note below
@@ -142,7 +148,7 @@ object LenetMnistExample {
     nnModel.setListeners(
       if (flagVisualizeDevelopmentOrProduction) {
         // this is a Development environment
-        val uiServer = UiServer.getInstance
+        val uiServer = UIServer.getInstance
         println("Visualization of the training in Development at " +
                 s"http://localhost:${uiServer.getPort}/activations")
 
@@ -181,7 +187,7 @@ object LenetMnistExample {
 
     println("****************Example finished********************")
     if (flagVisualizeDevelopmentOrProduction) {
-      val uiServer = UiServer.getInstance
+      val uiServer = UIServer.getInstance
       println(s"Press Ctrl-C to stop server at http://localhost:${uiServer.getPort}/\n" +
               s"(E.g., checking http://localhost:${uiServer.getPort}/activations )")
     }
