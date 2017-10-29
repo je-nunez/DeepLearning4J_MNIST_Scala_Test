@@ -58,37 +58,35 @@ The training shows progress lines in the standard-output. And the end, some resu
          Recall:    0.9815
          F1 Score:  0.9815
 
-Some results of the MNIST classifier using a Convolutional Neural Network in the [./cnn](./cnn) subdirectory:
+Some results of the MNIST classifier using a Convolutional Neural Network in the [./cnn_original](./cnn_original) subdirectory:
 
-        Examples labeled as 7 classified by model as 0: 1 times
         Examples labeled as 7 classified by model as 1: 2 times
-        Examples labeled as 7 classified by model as 2: 8 times
-        Examples labeled as 7 classified by model as 3: 1 times
-        Examples labeled as 7 classified by model as 7: 1012 times
+        Examples labeled as 7 classified by model as 2: 23 times
+        Examples labeled as 7 classified by model as 7: 1002 times
         Examples labeled as 7 classified by model as 8: 1 times
-        Examples labeled as 7 classified by model as 9: 3 times
         Examples labeled as 8 classified by model as 0: 4 times
-        Examples labeled as 8 classified by model as 2: 2 times
-        Examples labeled as 8 classified by model as 3: 1 times
-        Examples labeled as 8 classified by model as 4: 2 times
-        Examples labeled as 8 classified by model as 6: 1 times
-        Examples labeled as 8 classified by model as 7: 3 times
-        Examples labeled as 8 classified by model as 8: 960 times
-        Examples labeled as 8 classified by model as 9: 1 times
-        Examples labeled as 9 classified by model as 0: 6 times
-        Examples labeled as 9 classified by model as 1: 2 times
+        Examples labeled as 8 classified by model as 2: 7 times
+        Examples labeled as 8 classified by model as 3: 5 times
+        Examples labeled as 8 classified by model as 4: 3 times
+        Examples labeled as 8 classified by model as 5: 12 times
+        Examples labeled as 8 classified by model as 7: 9 times
+        Examples labeled as 8 classified by model as 8: 926 times
+        Examples labeled as 8 classified by model as 9: 8 times
+        Examples labeled as 9 classified by model as 0: 4 times
+        Examples labeled as 9 classified by model as 1: 4 times
+        Examples labeled as 9 classified by model as 2: 1 times
         Examples labeled as 9 classified by model as 3: 4 times
-        Examples labeled as 9 classified by model as 4: 16 times
-        Examples labeled as 9 classified by model as 5: 3 times
-        Examples labeled as 9 classified by model as 7: 6 times
-        Examples labeled as 9 classified by model as 8: 2 times
-        Examples labeled as 9 classified by model as 9: 970 times
-        
+        Examples labeled as 9 classified by model as 4: 20 times
+        Examples labeled as 9 classified by model as 5: 12 times
+        Examples labeled as 9 classified by model as 7: 12 times
+        Examples labeled as 9 classified by model as 8: 1 times
+        Examples labeled as 9 classified by model as 9: 951 times
+
         ==========================Scores========================================
-         Accuracy:  0.9836
-         Precision: 0.9836
-         Recall:    0.9836
-         F1 Score:  0.9836
+         Accuracy:        0.9748
+         Precision:       0.9749
+         Recall:          0.9748
+         F1 Score:        0.9746
 
 # Visualization of the progress of the Training of the Neural Network by DeepLearning4J
 
