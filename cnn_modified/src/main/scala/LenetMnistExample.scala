@@ -19,13 +19,14 @@ import org.deeplearning4j.nn.conf.layers.{ConvolutionLayer, DenseLayer, OutputLa
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
 import org.deeplearning4j.nn.weights.WeightInit
 import org.deeplearning4j.optimize.listeners.{ScoreIterationListener, PerformanceListener}
-// import org.deeplearning4j.ui.UiServer
 import org.deeplearning4j.ui.api.UIServer
 import org.deeplearning4j.ui.weights.ConvolutionalIterationListener
+
+import org.nd4j.linalg.activations.Activation
 import org.nd4j.linalg.api.ndarray.INDArray
 import org.nd4j.linalg.dataset.DataSet
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator
-import org.nd4j.linalg.activations.Activation
+import org.nd4j.linalg.factory.Nd4j
 import org.nd4j.linalg.learning.config.Nesterovs
 import org.nd4j.linalg.lossfunctions.LossFunctions
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION
@@ -51,6 +52,8 @@ object LenetMnistExample {
      *    org.reflections.ReflectionsException: could not create Vfs.Dir from url, no matching UrlType was found [file:/System/Library/Java/Extensions/libJ3DAudio.jnilib]
      */
     ReflectionsHelper.registerUrlTypes()
+
+    Nd4j.ENFORCE_NUMERICAL_STABILITY = true
 
     println("Loading MNIST data to training dataset and test dataset....")
     val mnistTrain = new MnistDataSetIterator(batchSize, true, 12345)
@@ -80,7 +83,8 @@ object LenetMnistExample {
                     .activation(Activation.IDENTITY)
                     .build()
               )
-        .layer(1, new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.MAX)
+        .layer(1, new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.PNORM)
+                    .pnorm(2)
                     .kernelSize(2, 2)
                     .stride(2, 2)
                     .build()
