@@ -64,11 +64,11 @@ object LenetMnistExample {
       new NeuralNetConfiguration.Builder()
         .seed(seed)
         .iterations(iterations)      // Training iterations as above
-        .regularization(true).l2(0.0005)
+        .regularization(true).l2(0.00001)
+        .learningRate(0.02).biasLearningRate(0.003)
              /*
                  Uncomment the following for learning decay and bias
               */
-        .learningRate(0.01)    // .biasLearningRate(0.02)
         // .learningRateDecayPolicy(LearningRatePolicy.Inverse).lrPolicyDecayRate(0.001).lrPolicyPower(0.75)
         .weightInit(WeightInit.XAVIER)
         .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
