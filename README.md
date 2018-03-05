@@ -88,6 +88,15 @@ Some results of the MNIST classifier using a Convolutional Neural Network in the
          Recall:          0.9748
          F1 Score:        0.9746
 
+Some results of the MNIST classifier using a Convolutional Neural Network with an extra neural layer, a Batch Normalization Layer, in the [./cnn_batch_norm](./cnn_batch_norm) subdirectory:
+
+        ==========================Scores========================================
+         Accuracy:        0.9898
+         Precision:       0.9898
+         Recall:          0.9897
+         F1 Score:        0.9897
+
+
 # Visualization of the progress of the Training of the Neural Network by DeepLearning4J
 
 DeepLearning4J has a web UI integrated on top of an embedded Eclipse Jetty web server, which allows to visualize many things during the training. For example, the activations at:
